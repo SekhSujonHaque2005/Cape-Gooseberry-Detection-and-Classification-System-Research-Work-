@@ -1,0 +1,130 @@
+@import "tailwindcss";
+
+@theme {
+  --color-editorial-cream: #FDFCF8;
+  --color-editorial-charcoal: #111111;
+  --color-editorial-gold: #B89B5E;
+  --color-editorial-gray: #888888;
+  
+  --font-display: "Times New Roman", Times, serif;
+  --font-sans: "Times New Roman", Times, serif;
+}
+
+:root {
+  --bg-primary: #FDFCF8;
+  --text-primary: #111111;
+  --accent-gold: #B89B5E;
+  --border-fine: rgba(17, 17, 17, 0.15);
+  --border-thick: rgba(17, 17, 17, 0.8);
+}
+
+.dark-section {
+  --bg-primary: #111111;
+  --text-primary: #FDFCF8;
+  --border-fine: rgba(253, 252, 248, 0.15);
+  --border-thick: rgba(253, 252, 248, 0.8);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: var(--bg-primary);
+}
+
+body {
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  /* Adjusting letter spacing for serif fonts */
+  letter-spacing: 0; 
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Mobile touch targets */
+@media (max-width: 640px) {
+  .border-thick {
+    border-width: 1.5px;
+  }
+  .heading-sub {
+    font-size: 0.95rem;
+  }
+}
+
+/* Structural Lines for Academic Look */
+.border-fine {
+  border: 1px solid var(--border-fine);
+}
+
+.border-fine-t { border-top: 1px solid var(--border-fine); }
+.border-fine-b { border-bottom: 1px solid var(--border-fine); }
+.border-fine-l { border-left: 1px solid var(--border-fine); }
+.border-fine-r { border-right: 1px solid var(--border-fine); }
+
+.border-thick-t { border-top: 2px solid var(--border-thick); }
+.border-thick-b { border-bottom: 2px solid var(--border-thick); }
+
+/* Typography: Academic / Traditional Editorial */
+.heading-display {
+  font-family: var(--font-display);
+  font-weight: normal;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+.heading-sub {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.1rem;
+  letter-spacing: 0.02em;
+}
+
+.text-meta {
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-editorial-gray);
+}
+
+/* Animations: Fluid & Subtle */
+@keyframes fluid-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-reveal {
+  animation: fluid-reveal 1s ease-out forwards;
+}
+
+@keyframes cinematic-breathe {
+  0% { transform: scale(1.1); filter: grayscale(100%); }
+  50% { transform: scale(1); filter: grayscale(0%); }
+  100% { transform: scale(1.1); filter: grayscale(100%); }
+}
+
+.animate-cinematic {
+  animation: cinematic-breathe 8s ease-in-out infinite;
+}
+
+/* Background Elements */
+.bg-grain {
+  position: fixed;
+  inset: 0;
+  opacity: 0.03;
+  pointer-events: none;
+  background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+  z-index: 100;
+}
+
+/* Selection */
+::selection {
+  background: var(--color-editorial-charcoal);
+  color: var(--color-editorial-cream);
+}

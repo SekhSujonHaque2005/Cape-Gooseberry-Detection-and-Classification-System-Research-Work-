@@ -1,0 +1,19 @@
+{
+  "name": "Cape Gooseberry AI",
+  "short_name": "Gooseberry AI",
+  "description": "AI-powered yield estimation & ripeness classification for Cape Gooseberry (Physalis peruviana)",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#f59e0b",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["education", "productivity", "utilities"]
+}

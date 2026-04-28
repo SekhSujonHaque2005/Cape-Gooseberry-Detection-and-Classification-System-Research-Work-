@@ -7,3 +7,5 @@ torchvision
 opencv-python
 Pillow
 timm
+huggingface_hub
+python-dotenv

@@ -5,7 +5,7 @@ class Detector:
         self.model = YOLO(model_path)
 
     def detect(self, image):
-        results = self.model(image)[0]
+        results = self.model(image, conf=0.15)[0]
 
         boxes = results.boxes.xyxy.cpu().numpy()
         confs = results.boxes.conf.cpu().numpy()
