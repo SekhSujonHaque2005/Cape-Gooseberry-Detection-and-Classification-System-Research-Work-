@@ -4,6 +4,7 @@ emoji: 🍇
 colorFrom: yellow
 colorTo: green
 sdk: docker
+dockerfile: ai-service/Dockerfile
 app_port: 7860
 pinned: false
 ---
