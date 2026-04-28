@@ -31,6 +31,17 @@ export default function RootLayout({
       <body className={`font-serif antialiased bg-editorial-cream text-editorial-charcoal min-h-screen flex flex-col selection:bg-editorial-gold selection:text-white`}>
         <Navbar />
         <main className="flex-1">{children}</main>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              if ('serviceWorker' in navigator) {
+                window.addEventListener('load', function() {
+                  navigator.serviceWorker.register('/sw.js');
+                });
+              }
+            `,
+          }}
+        />
         <Footer />
       </body>
     </html>
