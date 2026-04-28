@@ -1,3 +1,13 @@
+---
+title: Gooseberry AI Backend
+emoji: 🍇
+colorFrom: yellow
+colorTo: green
+sdk: docker
+app_port: 7860
+pinned: false
+---
+
 # Cape Gooseberry AI (Physalis peruviana Monitoring System)
 
 An advanced, precision-farming AI system designed for the autonomous detection, classification, and yield forecasting of Cape Gooseberries. 
