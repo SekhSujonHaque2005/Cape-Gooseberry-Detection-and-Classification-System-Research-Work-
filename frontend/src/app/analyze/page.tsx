@@ -9,6 +9,7 @@ export default function AnalyzePage() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [growthRetardant, setGrowthRetardant] = useState("none");
   const [trainingSystem, setTrainingSystem] = useState("standard");
+  const [canopyDensity, setCanopyDensity] = useState("moderate");
   const [nutrientManagement, setNutrientManagement] = useState("standard");
   const [isLoading, setIsLoading] = useState(false);
   const [result, setResult] = useState<AnalysisResult | null>(null);
@@ -25,6 +26,7 @@ export default function AnalyzePage() {
         selectedFile,
         growthRetardant,
         trainingSystem,
+        canopyDensity,
         nutrientManagement
       );
       setResult(data);
@@ -96,6 +98,23 @@ export default function AnalyzePage() {
                     <option value="none">Baseline</option>
                     <option value="CCC">Cycocel (CCC)</option>
                     <option value="Paclobutrazol">Paclobutrazol (PBZ)</option>
+                    <option value="Uniconazole">Uniconazole</option>
+                    <option value="Prohexadione Cl">Prohexadione Cl</option>
+                    <option value="Ethephon">Ethephon</option>
+                  </select>
+                </div>
+
+                <div className="group">
+                  <label className="text-meta mb-2 block font-bold text-xs sm:text-sm">Canopy Density</label>
+                  <select
+                    value={canopyDensity}
+                    onChange={(e) => setCanopyDensity(e.target.value)}
+                    disabled={isLoading}
+                    className="w-full px-3 sm:px-4 py-3 bg-editorial-cream border-2 border-editorial-charcoal font-serif text-base sm:text-lg focus:border-editorial-gold outline-none transition-all cursor-pointer appearance-none shadow-[4px_4px_0px_rgba(17,17,17,1)]"
+                  >
+                    <option value="sparse">Sparse (Clear View)</option>
+                    <option value="moderate">Moderate (Standard)</option>
+                    <option value="dense">Dense (High Occlusion)</option>
                   </select>
                 </div>
 

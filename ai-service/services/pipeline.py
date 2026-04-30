@@ -19,7 +19,7 @@ class Pipeline:
         self.architecture_analyzer = ArchitectureAnalyzer()
         self.vlm_analyzer = VLMAnalyzer(hf_token)
 
-    def _run_yolo_pipeline(self, image_rgb, growth_retardant, training_system):
+    def _run_yolo_pipeline(self, image_rgb, growth_retardant, training_system, canopy_density):
         """Run the traditional YOLO + EfficientNet pipeline."""
         try:
             detections = self.detector.detect(image_rgb)
@@ -44,7 +44,8 @@ class Pipeline:
             estimated_yield = self.yield_estimator.estimate(
                 results,
                 growth_retardant=growth_retardant,
-                training_system=training_system
+                training_system=training_system,
+                canopy_density=canopy_density
             )
 
             return {
@@ -70,7 +71,7 @@ class Pipeline:
         """Run the VLM analysis."""
         return self.vlm_analyzer.analyze(image_path)
 
-    def process(self, image_path, growth_retardant="none", training_system="standard"):
+    def process(self, image_path, growth_retardant="none", training_system="standard", canopy_density="moderate"):
         image = cv2.imread(image_path)
 
         if image is None:
@@ -81,7 +82,7 @@ class Pipeline:
         # Run YOLO pipeline and VLM in PARALLEL
         with ThreadPoolExecutor(max_workers=2) as executor:
             yolo_future = executor.submit(
-                self._run_yolo_pipeline, image_rgb, growth_retardant, training_system
+                self._run_yolo_pipeline, image_rgb, growth_retardant, training_system, canopy_density
             )
             vlm_future = executor.submit(self._run_vlm, image_path)
 
@@ -134,7 +135,8 @@ class Pipeline:
             estimated_yield = self.yield_estimator.estimate(
                 fake_detections,
                 growth_retardant=growth_retardant,
-                training_system=training_system
+                training_system=training_system,
+                canopy_density=canopy_density
             )
 
             final = {

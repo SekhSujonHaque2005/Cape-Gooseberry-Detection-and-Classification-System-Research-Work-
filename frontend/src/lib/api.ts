@@ -46,12 +46,14 @@ export async function analyzeImage(
   file: File,
   growthRetardant: string = "none",
   trainingSystem: string = "standard",
+  canopyDensity: string = "moderate",
   nutrientManagement: string = "standard"
 ): Promise<AnalysisResult> {
   const formData = new FormData();
   formData.append("file", file);
   formData.append("growth_retardant", growthRetardant);
   formData.append("training_system", trainingSystem);
+  formData.append("canopy_density", canopyDensity);
   formData.append("nutrient_management", nutrientManagement);
 
   const response = await fetch(`${API_BASE_URL}/analyze`, {

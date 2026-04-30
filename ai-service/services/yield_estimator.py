@@ -1,42 +1,50 @@
 class YieldEstimator:
     def __init__(self):
-        self.ripeness_factor = {
-            "ripe": 1.0,
-            "semi_ripe": 0.7,
-            "unripe": 0.4,
+        # Scientific Decision Weights (in kg)
+        self.weight_per_fruit = {
+            "ripe": 0.01,        # 10g
+            "semi_ripe": 0.005,  # 5g
+            "unripe": 0.002,     # 2g
             "other": 0.0
         }
 
-        self.scaling_constant = 0.00005
-        
-        # New treatment multipliers (based on literature for Cape Gooseberry)
+        # Updated Growth Retardant Factors based on research
         self.growth_retardant_factors = {
             "none": 1.0,
-            "CCC": 1.15,      # Cycocel often increases fruit set
-            "Paclobutrazol": 1.25 # PBZ is known to significantly boost yield
+            "CCC": 1.15,
+            "Paclobutrazol": 1.40,
+            "Uniconazole": 1.35,
+            "Prohexadione Cl": 1.15,
+            "Ethephon": 1.50
         }
         
+        # Training system factors (Quality/Caliber boost)
         self.training_system_factors = {
             "standard": 1.0,
-            "2-stem": 1.1,
-            "4-stem": 1.2
+            "2-stem": 1.20,
+            "4-stem": 1.10
         }
 
-    def estimate(self, detections, growth_retardant="none", training_system="standard"):
-        total = 0
+        # Occlusion Compensation (Canopy Density)
+        self.occlusion_factors = {
+            "sparse": 1.0,
+            "moderate": 1.25,
+            "dense": 1.50
+        }
+
+    def estimate(self, detections, growth_retardant="none", training_system="standard", canopy_density="moderate"):
+        total_weight = 0
 
         for d in detections:
-            x1, y1, x2, y2 = d["bbox"]
-            label = d["label"]
+            label = d.get("label", "other")
+            # Fixed weight based on scientific maturity stage
+            total_weight += self.weight_per_fruit.get(label, 0.0)
 
-            area = (x2 - x1) * (y2 - y1)
-            total += area * self.ripeness_factor.get(label, 0.0)
-
-        # Apply treatment multipliers
+        # Apply multipliers
         gr_mult = self.growth_retardant_factors.get(growth_retardant, 1.0)
         ts_mult = self.training_system_factors.get(training_system, 1.0)
+        occ_mult = self.occlusion_factors.get(canopy_density, 1.0)
         
-        raw_yield = total * self.scaling_constant
-        adjusted_yield = raw_yield * gr_mult * ts_mult
+        final_yield = total_weight * gr_mult * ts_mult * occ_mult
 
-        return round(adjusted_yield, 2)
+        return round(final_yield, 3)

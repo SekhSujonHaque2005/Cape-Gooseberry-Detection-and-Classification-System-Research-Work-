@@ -37,8 +37,9 @@ pipeline = Pipeline(
 UPLOAD_DIR = "uploads"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
-VALID_GROWTH_RETARDANTS = ["none", "CCC", "Paclobutrazol"]
+VALID_GROWTH_RETARDANTS = ["none", "CCC", "Paclobutrazol", "Uniconazole", "Prohexadione Cl", "Ethephon"]
 VALID_TRAINING_SYSTEMS = ["standard", "2-stem", "4-stem"]
+VALID_CANOPY_DENSITY = ["sparse", "moderate", "dense"]
 VALID_NUTRIENT_MGMT = ["standard"]
 
 
@@ -52,6 +53,7 @@ async def analyze(
     file: UploadFile = File(...),
     growth_retardant: str = Form("none"),
     training_system: str = Form("standard"),
+    canopy_density: str = Form("moderate"),
     nutrient_management: str = Form("standard")
 ):
     file_path = None
@@ -65,6 +67,11 @@ async def analyze(
         if training_system not in VALID_TRAINING_SYSTEMS:
             return JSONResponse(
                 content={"error": f"Invalid training_system. Must be one of: {VALID_TRAINING_SYSTEMS}"},
+                status_code=400
+            )
+        if canopy_density not in VALID_CANOPY_DENSITY:
+            return JSONResponse(
+                content={"error": f"Invalid canopy_density. Must be one of: {VALID_CANOPY_DENSITY}"},
                 status_code=400
             )
 
@@ -87,7 +94,8 @@ async def analyze(
         result = pipeline.process(
             file_path, 
             growth_retardant=growth_retardant, 
-            training_system=training_system
+            training_system=training_system,
+            canopy_density=canopy_density
         )
         
         # Add nutrient management to response
